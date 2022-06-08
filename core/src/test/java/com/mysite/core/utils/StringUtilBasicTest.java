@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public class StringUtilBasicTest extends TestCase {
 
     //Class Under Test
-    StringUtil stringUtil = new StringUtil();;
+    MySiteUtility stringUtil = new MySiteUtility();;
 
     public void testGetShowNameMethod_BlankSpaceAtBothEnd(){
         assertEquals("ram gupta", stringUtil.getFormattedName("  ram gupta  "));
