@@ -28,7 +28,7 @@ import java.util.Optional;
 public class EmailNotificationServlet extends SlingAllMethodsServlet {
 
     @Reference
-    private EmailService emailService;
+    private transient EmailService emailService;
 
     @Override
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws RuntimeException, IOException {
@@ -37,21 +37,22 @@ public class EmailNotificationServlet extends SlingAllMethodsServlet {
             String subject = Optional.of(request).map(req -> req.getParameter("subject")).orElse(StringUtils.EMPTY);
             String senderEmail = Optional.of(request).map(req -> req.getParameter("email")).orElse(null);
             String redirectUrl = Optional.of(request).map(req -> req.getParameter("redirectUrl")).orElse(StringUtils.EMPTY);
-
             Map<String, String> emailParams = new HashMap<>();
             emailParams.put("body", body);
             emailParams.put("receiverEmail", senderEmail);
             emailParams.put("subject", subject);
-
+            //sending email
             EmailService.MailSendStatus mailSendStatus = emailService.sendEmail(emailParams);
-            if (mailSendStatus == EmailService.MailSendStatus.SUCCESS){
+            if (mailSendStatus == EmailService.MailSendStatus.SUCCESS) {
                 response.setStatus(HttpServletResponse.SC_OK);
-                if (StringUtils.isNotEmpty(redirectUrl)){
+                if (StringUtils.isNotEmpty(redirectUrl)) {
                     response.sendRedirect(redirectUrl);
                 }
+            } else {
+                response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
             }
-        } catch (ConditionNotMetException e){
-            response.setStatus(HttpStatus.SC_BAD_REQUEST);
+        } catch (ConditionNotMetException e) {
+            response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
         }
     }
 }
