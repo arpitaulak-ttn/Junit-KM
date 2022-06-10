@@ -2,37 +2,44 @@ package com.mysite.core.servlets;
 
 import com.mysite.core.exception.ConditionNotMetException;
 import com.mysite.core.service.EmailService;
+import com.mysite.core.service.impl.EmailServiceImpl;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.*;
-import org.mockito.junit.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class EmailNotificationServletTest {
+public class EmailNotificationBasicTest {
 
     @InjectMocks
     private EmailNotificationServlet emailNotificationServlet;
 
-    @Mock
-    private EmailService emailService;
-
-    @Mock
     private SlingHttpServletRequest request;
 
-    @Mock
+    private EmailService emailService;
+
     private SlingHttpServletResponse response;
 
-    @Captor
-    ArgumentCaptor<String> argCaptor;
+    private ArgumentCaptor<String> argumentCaptor;
+
+    @Before
+    public void before(){
+        emailNotificationServlet = new EmailNotificationServlet();
+        request = mock(SlingHttpServletRequest.class);
+        emailService = mock(EmailServiceImpl.class);
+        response = mock(SlingHttpServletResponse.class);
+        argumentCaptor = ArgumentCaptor.forClass(String.class);
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     public void testDoGetMethod_success_ifRedirectUrlIsEmpty() throws IOException {
@@ -55,8 +62,8 @@ public class EmailNotificationServletTest {
         when(request.getParameter("redirectUrl")).thenReturn("www.google.com");
         when(emailService.sendEmail(any())).thenReturn(EmailService.MailSendStatus.SUCCESS);
         emailNotificationServlet.doGet(request, response);
-        verify(response).sendRedirect(argCaptor.capture());
-        Assert.assertEquals("www.google.com", argCaptor.getValue());
+        verify(response).sendRedirect(argumentCaptor.capture());
+        Assert.assertEquals("www.google.com", argumentCaptor.getValue());
     }
 
     @Test
@@ -73,5 +80,4 @@ public class EmailNotificationServletTest {
         emailNotificationServlet.doGet(request, response);
         verify(response).setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
-
 }
