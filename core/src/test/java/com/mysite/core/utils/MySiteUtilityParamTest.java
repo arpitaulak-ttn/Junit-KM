@@ -22,8 +22,6 @@ public class MySiteUtilityParamTest {
 
     // Each parameter should be placed as an argument here
     // Every time runner triggers, it will pass the arguments
-    // from parameters we defined in primeNumbers() method
-
     public MySiteUtilityParamTest(String inputNumber, String expectedResult) {
         this.inputNumber = inputNumber;
         this.expectedResult = expectedResult;
