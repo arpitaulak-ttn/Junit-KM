@@ -1,6 +1,7 @@
 package com.mysite.core.models;
 
 import com.mysite.core.utils.JcrUtils;
+import org.apache.commons.lang.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.junit.Before;
@@ -38,9 +39,8 @@ public class SampleModelTest {
     private ValueMap valueMap;
 
     @Before
-    public void before(){
-        when(resource.getValueMap()).thenReturn(valueMap);
-        when(valueMap.get("propertyName")).thenReturn("productPagePath");
+    public void before() throws IllegalAccessException {
+        FieldUtils.writeField(sampleModel, "propertyName", "productPagePath", true);
         PowerMockito.mockStatic(JcrUtils.class);
         PowerMockito.when(JcrUtils.getPageProperty(resource, "productPagePath")).thenReturn("/content/mysite/en/product");
     }

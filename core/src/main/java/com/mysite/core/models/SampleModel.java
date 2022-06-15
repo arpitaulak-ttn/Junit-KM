@@ -15,31 +15,44 @@
  */
 package com.mysite.core.models;
 
-import javax.annotation.PostConstruct;
-
 import com.mysite.core.utils.JcrUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
+import javax.annotation.PostConstruct;
+
+/**
+ * The type Sample model.
+ */
 @Model(adaptables = Resource.class)
 public class SampleModel {
 
-    @ValueMapValue(injectionStrategy=InjectionStrategy.OPTIONAL)
+    /**
+     * The Property name.
+     */
+    @ValueMapValue
     protected String propertyName;
 
-    @SlingObject
+    @Self
     private Resource currentResource;
 
     private String propertyValue;
 
+    /**
+     * Init.
+     */
     @PostConstruct
     public void init() {
         propertyValue = JcrUtils.getPageProperty(currentResource, propertyName);
     }
 
+    /**
+     * Gets property value.
+     *
+     * @return the property value
+     */
     public String getPropertyValue() {
         return propertyValue;
     }
