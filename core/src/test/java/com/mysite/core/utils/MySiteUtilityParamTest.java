@@ -11,8 +11,8 @@ import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class MySiteUtilityParamTest {
-    private String inputNumber;
-    private String expectedResult;
+    private final String inputNumber;
+    private final String expectedResult;
     private MySiteUtility mySiteUtility;
 
     @Before
@@ -41,8 +41,6 @@ public class MySiteUtilityParamTest {
         });
     }
 
-
-    // This test will run 4 times since we have 5 parameters defined
     @Test
     public void testGetShowNameMethod_Param() {
         Assert.assertEquals(expectedResult,
