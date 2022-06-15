@@ -3,6 +3,7 @@ package com.mysite.core.utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class MySiteUtility {
@@ -29,6 +30,22 @@ public class MySiteUtility {
 
     public boolean isEven(int a){
         return a % 2 == 0;
+    }
+
+    public int getLuckyNumber(String name) {
+        if (name == null) {
+            return getDefaultLuckyNumber();
+        }
+        return getComputedLuckyNumber(name.length());
+    }
+
+    private int getDefaultLuckyNumber(){
+        return 1;
+    }
+
+    private int getComputedLuckyNumber(int length){
+        Random random = new Random();
+        return random.nextInt(length);
     }
 
 }

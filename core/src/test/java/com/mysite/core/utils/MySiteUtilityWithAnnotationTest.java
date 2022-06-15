@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class StringUtilWithAnnotationTest {
+public class MySiteUtilityWithAnnotationTest {
     MySiteUtility siteUtility = new MySiteUtility();
 
     @Test

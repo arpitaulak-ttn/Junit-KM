@@ -2,9 +2,7 @@ package com.mysite.core.utils;
 
 import junit.framework.TestCase;
 
-import static org.junit.Assert.assertEquals;
-
-public class StringUtilBasicTest extends TestCase {
+public class MySiteUtilityBasicTest extends TestCase {
 
     //Class Under Test
     MySiteUtility stringUtil = new MySiteUtility();;

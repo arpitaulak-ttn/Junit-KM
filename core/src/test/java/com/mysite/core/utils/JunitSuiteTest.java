@@ -6,8 +6,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
         {       ExecutionTest.class,
-                StringUtilBasicTest.class,
-                StringUtilWithAnnotationTest.class
+                MySiteUtilityBasicTest.class,
+                MySiteUtilityWithAnnotationTest.class
         }
 )
 public class JunitSuiteTest {
