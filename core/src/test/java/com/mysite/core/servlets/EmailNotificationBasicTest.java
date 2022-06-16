@@ -61,6 +61,7 @@ public class EmailNotificationBasicTest {
         when(request.getParameter("email")).thenReturn("xyz@abc.com");
         when(request.getParameter("redirectUrl")).thenReturn("www.google.com");
         when(emailService.sendEmail(any())).thenReturn(EmailService.MailSendStatus.SUCCESS);
+        //argument captor
         emailNotificationServlet.doGet(request, response);
         verify(response).sendRedirect(argumentCaptor.capture());
         Assert.assertEquals("www.google.com", argumentCaptor.getValue());

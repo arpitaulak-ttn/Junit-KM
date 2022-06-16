@@ -21,7 +21,7 @@ public class ExecutionTest {
 
     @AfterClass
     public static void after_class() {
-        System.out.println("This method is executed before ExecutionTest class");
+        System.out.println("This method is executed after ExecutionTest class");
     }
 
     @Test
@@ -32,5 +32,11 @@ public class ExecutionTest {
     @Test
     public void testcase2() {
         System.out.println("Test case2");
+    }
+
+    @Ignore
+    @Test
+    public void testcase3() {
+        System.out.println("Please ignore me");
     }
 }
