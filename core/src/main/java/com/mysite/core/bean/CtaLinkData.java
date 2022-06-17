@@ -8,15 +8,6 @@ public class CtaLinkData {
     private String link;
     private String target;
 
-    public CtaLinkData(){
-
-    }
-
-    public CtaLinkData(String link, String target) {
-        this.link = link;
-        this.target = target;
-    }
-
     /**
      * Gets link.
      *
