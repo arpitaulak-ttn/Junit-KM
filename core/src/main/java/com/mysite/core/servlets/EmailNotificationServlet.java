@@ -35,11 +35,11 @@ public class EmailNotificationServlet extends SlingAllMethodsServlet {
         try {
             String body = Optional.of(request).map(req -> req.getParameter("body")).orElse(StringUtils.EMPTY);
             String subject = Optional.of(request).map(req -> req.getParameter("subject")).orElse(StringUtils.EMPTY);
-            String senderEmail = Optional.of(request).map(req -> req.getParameter("email")).orElse(null);
+            String receiverEmail = Optional.of(request).map(req -> req.getParameter("email")).orElse(null);
             String redirectUrl = Optional.of(request).map(req -> req.getParameter("redirectUrl")).orElse(StringUtils.EMPTY);
             Map<String, String> emailParams = new HashMap<>();
             emailParams.put("body", body);
-            emailParams.put("receiverEmail", senderEmail);
+            emailParams.put("receiverEmail", receiverEmail);
             emailParams.put("subject", subject);
             //sending email
             EmailService.MailSendStatus mailSendStatus = emailService.sendEmail(emailParams);

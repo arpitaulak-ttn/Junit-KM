@@ -33,7 +33,6 @@ public class EmailNotificationBasicTest {
 
     @Before
     public void before(){
-        emailNotificationServlet = new EmailNotificationServlet();
         request = mock(SlingHttpServletRequest.class);
         emailService = mock(EmailServiceImpl.class);
         response = mock(SlingHttpServletResponse.class);
