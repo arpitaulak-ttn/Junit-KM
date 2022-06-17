@@ -43,42 +43,51 @@ public class EmailNotificationBasicTest {
 
     @Test
     public void testDoGetMethod_success_ifRedirectUrlIsEmpty() throws IOException {
+        //GIVEN
         when(request.getParameter("email")).thenReturn("xyz@abc.com");
         when(emailService.sendEmail(any())).thenReturn(EmailService.MailSendStatus.SUCCESS);
+        //WHEN
         emailNotificationServlet.doGet(request, response);
-
+        //THEN
         verify(response).setStatus(HttpServletResponse.SC_OK);
         verify(response, times(1)).setStatus(HttpServletResponse.SC_OK);
         verify(response, atLeastOnce()).setStatus(HttpServletResponse.SC_OK);
         verify(response, atLeast(0)).setStatus(HttpServletResponse.SC_OK);
         verify(response, atMost(2)).setStatus(HttpServletResponse.SC_OK);
-
         verify(response, never()).setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
     @Test
     public void testDoGetMethod_success_ifRedirectUrlIsNotEmpty() throws IOException {
+        //GIVEN
         when(request.getParameter("email")).thenReturn("xyz@abc.com");
         when(request.getParameter("redirectUrl")).thenReturn("www.google.com");
         when(emailService.sendEmail(any())).thenReturn(EmailService.MailSendStatus.SUCCESS);
-        //argument captor
+        //WHEN
         emailNotificationServlet.doGet(request, response);
+        //THEN
         verify(response).sendRedirect(argumentCaptor.capture());
         Assert.assertEquals("www.google.com", argumentCaptor.getValue());
     }
 
     @Test
     public void testDoGetMethod_failure() throws IOException {
+        //GIVEN
         when(request.getParameter("email")).thenReturn("xyz@abc.com");
         when(emailService.sendEmail(any())).thenReturn(EmailService.MailSendStatus.FAILED);
+        //WHEN
         emailNotificationServlet.doGet(request, response);
+        //THEN
         verify(response).setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
     @Test
     public void testDoGet_receivedException() throws IOException {
+        //GIVEN
         when(emailService.sendEmail(any())).thenThrow(new ConditionNotMetException(EmailService.MailSendStatus.RECEIVER_MAIL_IS_EMPTY.toString()));
+        //WHEN
         emailNotificationServlet.doGet(request, response);
+        //THEN
         verify(response).setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 }

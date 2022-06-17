@@ -40,10 +40,13 @@ public class EmailServiceImplTest {
 
     @Test
     public void testSuccessfulExecution(){
+        //GIVEN
         when(params.get("receiverEmail")).thenReturn("xyz@abc.com");
         when(params.getOrDefault("subject", StringUtils.EMPTY)).thenReturn("This is the subject of the email");
         when(params.getOrDefault("body", StringUtils.EMPTY)).thenReturn("This is the body of the email");
+        //WHEN
         EmailService.MailSendStatus mailSendStatus = emailServiceimpl.sendEmail(params);
+        //THEN
         Assert.assertEquals("Successful execution", EmailService.MailSendStatus.SUCCESS, mailSendStatus);
     }
 
@@ -54,9 +57,12 @@ public class EmailServiceImplTest {
 
     @Test
     public void testFailedExecutionWhenBodyNotAvailable(){
+        //GIVEN
         when(params.get("receiverEmail")).thenReturn("xyz@abc.com");
         when(params.getOrDefault("subject", StringUtils.EMPTY)).thenReturn("This is the subject of the email");
+        //WHEN
         EmailService.MailSendStatus mailSendStatus = emailServiceimpl.sendEmail(params);
+        //THEN
         Assert.assertEquals("Failed execution", EmailService.MailSendStatus.FAILED, mailSendStatus);
     }
 }

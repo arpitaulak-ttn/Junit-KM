@@ -36,7 +36,9 @@ public class SampleModelTest {
 
     @Test
     public void testGetPropertyValue() {
+        //WHEN
         sampleModel.init();
+        //THEN
         assertEquals("/content/mysite/en/product", sampleModel.getPropertyValue());
     }
 }
